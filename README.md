@@ -1,5 +1,5 @@
 # ALLMART
 
-# NOTES
+# Notes
 
 - create repo
