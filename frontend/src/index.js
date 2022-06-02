@@ -5,13 +5,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { HelmetProvider } from 'react-helmet-async';
+import { StoreProvider } from './Store';
 
 const root = document.getElementById('root');
 ReactDOM.render(
   <React.StrictMode>
-    <HelmetProvider>
-      <App />
-    </HelmetProvider>
+    <StoreProvider>
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
+    </StoreProvider>
   </React.StrictMode>,
   root
 );
