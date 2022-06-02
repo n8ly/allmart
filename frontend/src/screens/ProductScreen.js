@@ -53,10 +53,18 @@ function ProductScreen() {
   }, [slug]);
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
-  const addToCartHandler = () => {
+  const { cart } = state;
+  const addToCartHandler = async () => {
+    const existItem = cart.cartItems.find((x) => x._id === product._id); // changed cartItem to cartITems
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+    const { data } = await axios.get(`/api/products/${product._id}`);
+    if (data.countInStock < quantity) {
+      window.alert('Sorry. Product is out of stock');
+      return;
+    }
     ctxDispatch({
       type: 'CART_ADD_ITEM',
-      payload: { ...product, quantity: 1 },
+      payload: { ...product, quantity },
     });
   };
 
@@ -117,7 +125,6 @@ function ProductScreen() {
                     </Col>
                   </Row>
                 </ListGroup.Item>
-                {console.log(product.countInStock > 0)}
                 {product.countInStock > 0 && (
                   <ListGroup.Item>
                     <div className="d-grid">
