@@ -27,8 +27,6 @@ const reducer = (state, action) => {
   }
 };
 
-// function HomeScreen() {
-
 function ProductScreen() {
   const navigate = useNavigate();
   const params = useParams();

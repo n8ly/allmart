@@ -34,7 +34,6 @@ function App() {
               </Nav>
             </Container>
           </Navbar>
-          {/* <Link to="/">Allmart</Link> */}
         </header>
         <main>
           <Container className="mt-3">

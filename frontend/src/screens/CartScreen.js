@@ -1,12 +1,4 @@
-// import { Card } from 'react-bootstrap/Card';
-// import Store
-// import { Button } from 'react-bootstrap/Button';
-// import Row
-// import Column
-// import data from data.js?
-
-// good but aslo psuedocode filesnames
-
+import axios from 'axios';
 import { useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -14,39 +6,42 @@ import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MessageBox from '../components/MessageBox';
 import { Store } from '../Store';
 
 export default function CartScreen() {
-  // link from product screen to call CartScreen (also from nav icon?)
-  // create routes in app for cartscreen
-
+  const navigate = useNavigate();
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
     cart: { cartItems },
   } = state;
 
+  const updateCartHandler = async (item, quantity) => {
+    // naming quantity newQuantity didn't work. Why?
+    const { data } = await axios.get(`/api/products/${item._id}`);
+    if (data.countInStock < quantity) {
+      window.alert('Sorry. Product is out of stock');
+      return;
+    }
+    ctxDispatch({
+      type: 'CART_ADD_ITEM',
+      payload: { ...item, quantity },
+    });
+  };
+
+  const removeItemHandler = (item) => {
+    ctxDispatch({
+      type: 'CART_REMOVE_ITEM',
+      payload: item,
+    });
+  };
+
+  const checkoutHandler = () => {
+    navigate('/signin?redirect=/shipping');
+  };
+
   return (
-    // cols then rows
-    // card
-    // photo /with card?    (from????)
-    // link
-    // item name
-    // button subtract from cart
-    // (need to make a function to match just like add-to-cart)
-    // render total quantity of the item
-    // button add to cart (use already written function)
-    // render price of product
-    // button remove item from store
-
-    // new card row for ea item in cart. use map
-
-    // second card on next row (maybe 4/12ths? of col    using bootstrap___)
-    // render number of items(same as red dot on top of screen)
-    // render total price of all of them
-    // button "proceed to checkout" (take up all of width)
-
     <div>
       <Helmet>
         <title>Shopping Cart</title>
@@ -74,12 +69,20 @@ export default function CartScreen() {
                       <Link to={`/product/${item.slug}`}>{item.name}</Link>
                     </Col>
                     <Col md={3}>
-                      <Button variant="light" disabled={item.quantity === 1}>
-                        {/* onClick={minusCartItem} */}
+                      <Button
+                        onClick={() =>
+                          updateCartHandler(item, item.quantity - 1)
+                        }
+                        variant="light"
+                        disabled={item.quantity === 1}
+                      >
                         <i className="fas fa-minus-circle"></i>
                       </Button>{' '}
                       <span>{item.quantity}</span>{' '}
                       <Button
+                        onClick={() =>
+                          updateCartHandler(item, item.quantity + 1)
+                        }
                         variant="light"
                         disabled={item.quantity === item.countInStock}
                       >
@@ -88,9 +91,12 @@ export default function CartScreen() {
                     </Col>
                     <Col md={3}>${item.price}</Col>
                     <Col md={2}>
-                      <Button variant="light">
+                      <Button
+                        onClick={() => removeItemHandler(item)}
+                        variant="light"
+                      >
                         <i className="fas fa-trash"></i>
-                      </Button>{' '}
+                      </Button>
                     </Col>
                   </Row>
                 </ListGroup.Item>
@@ -112,6 +118,7 @@ export default function CartScreen() {
                 <ListGroup.Item>
                   <div className="d-grid">
                     <Button
+                      onClick={checkoutHandler}
                       type="button"
                       variant="primary"
                       disabled={cartItems.length === 0}
