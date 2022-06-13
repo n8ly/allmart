@@ -73,12 +73,6 @@ export default function PlaceOrderScreen() {
       dispatch({ type: 'CREATE_FAIL' });
       toast.error(getError(err));
     }
-
-    // .axios('/api/product/order', { order: cart.cartItems})   // import App?
-    // // need to set up server to handle order placements
-    // localStorage.setItem(    clear all cart somehow    )
-    // ctxDispatch('RESET_CART', )
-    // navigate('/order'); // need to set up page and route here
   };
 
   useEffect(() => {
