@@ -1,0 +1,21 @@
+{
+  "name": "allmart",
+  "version": "1.0.0",
+  "description": "# Notes",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd backend && npm install  && cd ../frontend && npm install && npm run build",
+    "start": "node backend/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/n8ly/allmart.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/n8ly/allmart/issues"
+  },
+  "homepage": "https://github.com/n8ly/allmart#readme"
+}
