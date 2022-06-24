@@ -29,12 +29,10 @@ export default function SigninScreen() {
         password,
       });
       ctxDispatch({ type: 'USER_SIGNIN', payload: data });
-      // console.log(data);
       localStorage.setItem('userInfo', JSON.stringify(data));
       navigate(redirect || '/');
     } catch (err) {
       toast.error(getError(err));
-      // alert('Invalid email or password');
     }
   };
 
