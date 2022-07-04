@@ -121,6 +121,7 @@ export default function ProductListScreen() {
       }
     }
   };
+
   return (
     <div>
       <Row>
@@ -168,7 +169,7 @@ export default function ProductListScreen() {
                       variant="light"
                       onClick={() => navigate(`/admin/product/${product._id}`)}
                     >
-                      Edit
+                      Edit{' '}
                     </Button>
                     &nbsp;
                     <Button

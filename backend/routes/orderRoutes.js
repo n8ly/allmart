@@ -125,8 +125,6 @@ orderRouter.put(
   })
 );
 
-export default orderRouter;
-
 orderRouter.put(
   `/:id/deliver`,
   isAuth,
@@ -142,3 +140,20 @@ orderRouter.put(
     }
   })
 );
+
+orderRouter.delete(
+  `/:id`,
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      await order.remove();
+      res.send({ message: 'Order Deleted' });
+    } else {
+      res.status(404).send({ message: 'Order Not Found' });
+    }
+  })
+);
+
+export default orderRouter;
