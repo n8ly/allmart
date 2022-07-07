@@ -36,12 +36,10 @@ export default function SignupScreen() {
         password,
       });
       ctxDispatch({ type: 'USER_SIGNIN', payload: data });
-      // console.log(data);
       localStorage.setItem('userInfo', JSON.stringify(data));
       navigate(redirect || '/');
     } catch (err) {
       toast.error(getError(err));
-      // alert('Invalid email or password');
     }
   };
 
@@ -60,11 +58,7 @@ export default function SignupScreen() {
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>Name</Form.Label>
-          <Form.Control
-            // type="name"?
-            required
-            onChange={(e) => setName(e.target.value)}
-          />
+          <Form.Control required onChange={(e) => setName(e.target.value)} />
         </Form.Group>
         <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email</Form.Label>
@@ -85,7 +79,7 @@ export default function SignupScreen() {
         <Form.Group className="mb-3" controlId="confirmPassword">
           <Form.Label>Confirm Password</Form.Label>
           <Form.Control
-            type="password" // "confirmPassword"?
+            type="password"
             required
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
