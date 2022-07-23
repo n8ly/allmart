@@ -2,7 +2,7 @@ import express from 'express';
 import Order from '../models/orderModel.js';
 import User from '../models/userModel.js';
 import Product from '../models/productModel.js';
-import { isAuth, isAdmin } from '../utils.js';
+import { isAuth, isAdmin, mailgun, payOrderEmailTemplate } from '../utils.js';
 import expressAsyncHandler from 'express-async-handler';
 
 const orderRouter = express.Router();
@@ -107,7 +107,10 @@ orderRouter.put(
   '/:id/pay',
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate(
+      'user',
+      'email name'
+    );
     if (order) {
       order.isPaid = true;
       order.paidAt = Date.now();
@@ -118,6 +121,28 @@ orderRouter.put(
         email_address: req.body.email_address,
       };
       const updatedOrder = await order.save();
+
+      mailgun()
+        .messages()
+        .send(
+          {
+            from: 'Allmart <allmart@mail.n8ly.com>',
+            // from: 'Nathan Golightly <nthan@n8ly.com>',
+            // change? fix site for email
+
+            to: `${order.user.name}, <${order.user.email}>`,
+            subject: `New Order ${order._id}`,
+            html: payOrderEmailTemplate(order),
+          },
+          (error, body) => {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log(body);
+            }
+          }
+        );
+
       res.send({ message: 'Order Paid', order: updatedOrder });
     } else {
       res.status(404).send({ message: 'Order Not Found' });
