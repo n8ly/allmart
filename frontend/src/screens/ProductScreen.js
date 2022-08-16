@@ -43,6 +43,7 @@ function ProductScreen() {
   const reviewsRef = useRef();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
+  const [selectedImage, setSelectedImage] = useState('');
   const navigate = useNavigate();
   const params = useParams();
   const { slug } = params;
@@ -126,7 +127,7 @@ function ProductScreen() {
         <Col md={6}>
           <img
             className="image-large"
-            src={product.image}
+            src={selectedImage || product.image}
             alt={product.name}
           ></img>
         </Col>
@@ -138,13 +139,39 @@ function ProductScreen() {
               </Helmet>
               <h1>{product.name}</h1>
             </ListGroup.Item>
+
             <ListGroup.Item>
               <Rating
                 rating={product.rating}
                 numReviews={product.numReviews}
               ></Rating>
             </ListGroup.Item>
+
             <ListGroup.Item>Price : ${product.price}</ListGroup.Item>
+
+            <ListGroup.Item>
+              <Row xs={1} md={2} className="g-2">
+                {[product.image, ...product.images].map((x) => (
+                  <Col key={x}>
+                    <Card>
+                      <Button
+                        className="thumbnail"
+                        type="button"
+                        variant="light"
+                        onClick={() => setSelectedImage(x)}
+                      >
+                        <Card.Img
+                          variant="top"
+                          src={x}
+                          alt="product"
+                        ></Card.Img>
+                      </Button>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </ListGroup.Item>
+
             <ListGroup.Item>
               Description:
               <p>{product.description}</p>
@@ -161,6 +188,7 @@ function ProductScreen() {
                     <Col>${product.price}</Col>
                   </Row>
                 </ListGroup.Item>
+
                 <ListGroup.Item>
                   <Row>
                     <Col>Status:</Col>
@@ -173,6 +201,7 @@ function ProductScreen() {
                     </Col>
                   </Row>
                 </ListGroup.Item>
+
                 {product.countInStock > 0 && (
                   <ListGroup.Item>
                     <div className="d-grid">
