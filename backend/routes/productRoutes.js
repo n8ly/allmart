@@ -19,10 +19,11 @@ productRouter.post(
     const newProduct = new Product({
       name: 'sample name' + Date.now(),
       slug: 'sample-name-' + Date.now(),
-      image: '/images/p1.jpg',
+      image:
+        'https://media.neimanmarcus.com/f_auto,q_auto:low,ar_4:5,c_fill,dpr_2.0,w_790/01/nm_4335922_100426_m',
       brand: 'sample brand',
       category: 'sample category',
-      description: 'sample discription',
+      description: 'sample description',
       price: 0,
       countInStock: 0,
       rating: 0,
