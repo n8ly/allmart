@@ -16,13 +16,15 @@ const data = {
     },
   ],
 
+  // PICS WERE CHANGED, SO VALUES NEED TO BE CHANGED TO FIT
+
   products: [
     {
       // _id: '1',
       name: 'Nike Slim shirt',
       slug: 'nike-slim-shirt',
       category: 'Shirts',
-      image: '/images/p1.jpg',
+      image: '/images/FordBlack1.webp',
       price: 120,
       countInStock: 10,
       brand: 'Nike',
@@ -35,8 +37,8 @@ const data = {
       name: 'Adidas Fit shirt',
       slug: 'adidas-fit-shirt',
       category: 'Shirts',
-      image: '/images/p2.jpg',
-      price: 250,
+      image: '/images/PlinerEcru1.webp',
+      price: 250, 
       countInStock: 0,
       brand: 'Adidas',
       rating: 4.0,
@@ -48,7 +50,7 @@ const data = {
       name: 'Nike Slim pants',
       slug: 'nike-slim-pants',
       category: 'Pants',
-      image: '/images/p3.jpg',
+      image: '/images/PradaBlack1.webp',
       price: 25,
       countInStock: 15,
       brand: 'Nike',
@@ -61,7 +63,7 @@ const data = {
       name: 'Adidas Fit pants',
       slug: 'adidas-fit-pants',
       category: 'Pants',
-      image: '/images/p4.jpg',
+      image: '/images/ShinolaGreen1.webp',
       price: 65,
       countInStock: 5,
       brand: 'Puma',
