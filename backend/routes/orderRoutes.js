@@ -127,9 +127,6 @@ orderRouter.put(
         .send(
           {
             from: 'Allmart <allmart@mail.n8ly.com>',
-            // from: 'Nathan Golightly <nthan@n8ly.com>',
-            // change? fix site for email
-
             to: `${order.user.name}, <${order.user.email}>`,
             subject: `New Order ${order._id}`,
             html: payOrderEmailTemplate(order),
